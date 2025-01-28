@@ -1,0 +1,9 @@
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#certificate {
+    background: linear-gradient(135deg, #3399ff 0%, #66ccff 100%);
+  }
+  

@@ -1,0 +1,67 @@
+import React, { useState } from 'react';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import './index.css';
+
+function App() {
+  const [name, setName] = useState('');
+
+  const generatePdf = () => {
+    const certificate = document.getElementById('certificate');
+    html2canvas(certificate, { backgroundColor: null }).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({ orientation: 'landscape', unit: 'in', format: [8.27, 5.83], putOnlyUsedFonts: true });
+
+      pdf.setFont('helvetica', 'normal');
+      pdf.addImage(imgData, 'PNG', 0, 0, 8.27, 5.83); 
+      pdf.save('certificate.pdf');
+    });
+  };
+
+  return (
+    <div className="text-center mt-20">
+      <h1 className="text-2xl pb-5 font-bold">Certificate Generator</h1>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          generatePdf();
+        }}
+        className="flex flex-col items-center"
+      >
+        <div className="flex flex-col pt-5 md:flex-row items-center mb-4 w-full max-w-md">
+          <input
+            type="text"
+            placeholder="Enter your name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            maxLength={30}
+            className="p-2 border border-gray-300 rounded mb-2 md:mb-0 md:mr-2 flex-grow"
+          />
+          <button 
+            type="button" 
+            onClick={() => {
+              generatePdf();
+            }}
+            className="bg-blue-500 text-white px-4 py-2 rounded"
+          >
+            Download Certificate
+          </button>
+        </div>
+      </form>
+      <div className="flex justify-center items-center mt-4">
+        <div
+          id="certificate"
+          className="w-80 h-60 md:w-[8.27in] md:h-[5.83in] flex flex-col justify-center items-center border-2 border-black shadow-lg mx-auto p-4 relative overflow-hidden"
+        >
+          <h1 className="text-lg md:text-2xl font-bold mb-1">Certificate of Completion</h1> {/* Reduced mb */}
+          <p className="md:text-lg mb-1">This is to certify that</p> {/* Reduced mb */}
+          <h2 className="text-md md:text-xl font-semibold mb-1 break-words max-w-full">{name}</h2> {/* Reduced mb */}
+          <p className="md:text-lg">has successfully completed the course.</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default App;  use imge for certificate
