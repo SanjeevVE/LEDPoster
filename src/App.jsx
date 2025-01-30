@@ -98,7 +98,7 @@ function App() {
                   left: ${namePos.x};
                   transform: translate(-50%, -50%);
                   font-size: 2.0rem;
-                  font-family: 'Times New Roman', Times, serif; 
+                  font-family: 'Arial Black', Arial, sans-serif;
                   font-weight: normal;
                   color: ${nameColor}; /* Dynamic color for name */
                 }
@@ -108,10 +108,10 @@ function App() {
                   left: ${bibPos.x};
                   transform: translate(-50%, -50%);
                   font-size: 6.0rem;
-                  font-family: 'Times New Roman', Times, serif;
+                  font-family: 'Arial Black', Arial, sans-serif;
                   color: ${bibColor}; /* Dynamic color for bib number */
                 }
-
+                  
               </style>
             </head>
             <body>
