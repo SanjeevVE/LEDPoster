@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Papa from "papaparse";
-import "./app.css";
+import "./App.css";
 
 function App() {
   const [data, setData] = useState([]);
@@ -111,7 +111,7 @@ function App() {
                   font-family: 'Arial Black', Arial, sans-serif;
                   color: ${bibColor}; /* Dynamic color for bib number */
                 }
-
+                  
               </style>
             </head>
             <body>
