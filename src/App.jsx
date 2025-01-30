@@ -93,26 +93,25 @@ function App() {
                   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
                 }
                 .name {
-  position: absolute;
-  top: ${namePos.y};
-  left: ${namePos.x};
-  transform: translate(-50%, -50%);
-  font-size: 2.0rem;
-  font-family: 'Arial Black', Arial, sans-serif;
-  font-weight: normal;
-  color: ${nameColor}; /* Dynamic color for name */
-}
-.bib {
-  position: absolute;
-  top: ${bibPos.y};
-  left: ${bibPos.x};
-  transform: translate(-50%, -50%);
-  font-size: 6.0rem;
-  font-family: 'Arial Black', Arial, sans-serif;
-  color: ${bibColor}; /* Dynamic color for bib number */
-}
-
-
+                  position: absolute;
+                  top: ${namePos.y};
+                  left: ${namePos.x};
+                  transform: translate(-50%, -50%);
+                  font-size: 2.0rem;
+                  font-family: 'Arial Black', Arial, sans-serif;
+                  font-weight: normal;
+                  color: ${nameColor}; /* Dynamic color for name */
+                }
+                .bib {
+                  position: absolute;
+                  top: ${bibPos.y};
+                  left: ${bibPos.x};
+                  transform: translate(-50%, -50%);
+                  font-size: 6.0rem;
+                  font-family: 'Arial Black', Arial, sans-serif;
+                  color: ${bibColor}; /* Dynamic color for bib number */
+                }
+                  
               </style>
             </head>
             <body>
