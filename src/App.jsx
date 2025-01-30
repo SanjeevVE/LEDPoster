@@ -12,8 +12,8 @@ function App() {
     if (String(bib).startsWith("D")) {
       return {
         image: "https://i.ibb.co/chmC3Ck2/2KM.jpg",
-        namePos: { x: "64%", y: "29%" },
-        bibPos: { x: "64%", y: "21%" },
+        namePos: { x: "63%", y: "29%" },
+        bibPos: { x: "63%", y: "21%" },
         nameColor: "white",
         bibColor: "white",
       };
@@ -30,8 +30,8 @@ function App() {
     if (bib >= 21000 && bib <= 21999) {
       return {
         image: "https://i.ibb.co/gMJMRW08/HALF-MARATHON.jpg",
-        namePos: { x: "69%", y: "26%" },
-        bibPos: { x: "69%", y: "19%" },
+        namePos: { x: "68%", y: "26%" },
+        bibPos: { x: "68%", y: "19%" },
         nameColor: "white",
         bibColor: "white",
       };
@@ -39,8 +39,8 @@ function App() {
     if (bib >= 50000) {
       return {
         image: "https://i.ibb.co/fVrPd69m/5KM.jpg",
-        namePos: { x: "69%", y: "26%" },
-        bibPos: { x: "69%", y: "19%" },
+        namePos: { x: "68%", y: "26%" },
+        bibPos: { x: "68%", y: "19%" },
         nameColor: "white",
         bibColor: "white",
       };
@@ -107,7 +107,7 @@ function App() {
                     top: ${bibPos.y};
                   left: ${bibPos.x};
                   transform: translate(-50%, -50%);
-                  font-size: 5.0rem;
+                  font-size: 4.0rem;
                   font-family: 'Arial Black', Arial, sans-serif;
                   color: ${bibColor}; /* Dynamic color for bib number */
                 }
