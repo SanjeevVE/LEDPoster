@@ -179,11 +179,11 @@ function App() {
           id='fileUpload'
         />
         <label
-          htmlFor='fileUpload'
-          className='bg-[#007BFF] text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 cursor-pointer transition-all duration-200'
-        >
-          {csvUploaded ? "CSV Uploaded" : "Upload CSV"}
-        </label>
+        htmlFor='fileUpload'
+        className={`px-6 py-3 rounded-md font-semibold shadow-md cursor-pointer transition-all duration-200 ${
+          csvUploaded ? "bg-[#C7CC00] hover:bg-[#AEB300]" : "bg-[#007BFF] hover:bg-blue-600 text-white"
+        }`}>
+        {csvUploaded ? "CSV Uploaded" : "Upload CSV"}</label>
       </div>
     </div>
   );
