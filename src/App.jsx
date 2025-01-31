@@ -9,7 +9,7 @@ function App() {
   const [csvUploaded, setCsvUploaded] = useState(false);
 
   const getCertificateImage = (bib) => {
-    if (String(bib).startsWith("D")) {
+    if (String(bib).startsWith("A")) {
       return {
         image: "https://i.ibb.co/chmC3Ck2/2KM.jpg",
         namePos: { x: "65%", y: "28%" },
