@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Papa from "papaparse";
-import "./app.css";
+import "./App.css";
 
 function App() {
   const [data, setData] = useState([]);
@@ -103,7 +103,7 @@ function App() {
                 }
                 .bib {
                   position: absolute;
-                  top: ${bibPos.y};
+                    top: ${bibPos.y};
                   left: ${bibPos.x};
                   transform: translate(-50%, -50%);
                   font-size: 7.0rem;
