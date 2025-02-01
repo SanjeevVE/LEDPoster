@@ -11,36 +11,36 @@ function App() {
   const getCertificateImage = (bib) => {
     if (String(bib).startsWith("A")) {
       return {
-        image: "https://i.ibb.co/chmC3Ck2/2KM.jpg",
-        namePos: { x: "65%", y: "28%" },
-        bibPos: { x: "65%", y: "21%" },
+        image: "https://i.ibb.co/CKR6tX1T/2km-new.jpg",
+        namePos: { x: "72%", y: "28%" },
+        bibPos: { x: "72%", y: "21%" },
         nameColor: "white",
         bibColor: "white",
       };
     }
     if (bib >= 10000 && bib <= 10999) {
       return {
-        image: "https://i.ibb.co/4ZKJ7Hdc/10KM.jpg",
-        namePos: { x: "65%", y: "29%" },
-        bibPos: { x: "65%", y: "22%" },
+        image: "https://i.ibb.co/LXLZsP6g/10km-new.jpg",
+        namePos: { x: "72%", y: "29%" },
+        bibPos: { x: "72%", y: "22%" },
         nameColor: "white",
         bibColor: "white",
       };
     }
     if (bib >= 21000 && bib <= 21999) {
       return {
-        image: "https://i.ibb.co/gMJMRW08/HALF-MARATHON.jpg",
-        namePos: { x: "70%", y: "26%" },
-        bibPos: { x: "70%", y: "19%" },
+        image: "https://i.ibb.co/qFPJVdJT/21KM-new.jpg",
+        namePos: { x: "79%", y: "26%" },
+        bibPos: { x: "79%", y: "19%" },
         nameColor: "white",
         bibColor: "white",
       };
     }
     if (bib >= 50000) {
       return {
-        image: "https://i.ibb.co/fVrPd69m/5KM.jpg",
-        namePos: { x: "70%", y: "26%" },
-        bibPos: { x: "70%", y: "19%" },
+        image: "https://i.ibb.co/7Ntd3Bx2/5km-new.jpg",
+        namePos: { x: "79%", y: "26%" },
+        bibPos: { x: "79%", y: "19%" },
         nameColor: "white",
         bibColor: "white",
       };
@@ -86,8 +86,7 @@ function App() {
                 }
                 .certificate {
                   position: relative;
-                  width: 100%;
-                  height: 100%;
+                  width: 100vw;                 
                   overflow: hidden;
                   background-color: white;
                   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -97,7 +96,7 @@ function App() {
                   top: ${namePos.y};
                   left: ${namePos.x};
                   transform: translate(-50%, -50%);
-                  font-size: 2.0rem;
+                  font-size: 2.5rem;
                   font-family: 'Arial Black', Arial, sans-serif;
                   font-weight: normal;
                   color: ${nameColor}; /* Dynamic color for name */
@@ -107,7 +106,7 @@ function App() {
                   top: ${bibPos.y};
                   left: ${bibPos.x};
                   transform: translate(-50%, -50%);
-                  font-size: 6.0rem;
+                  font-size: 7.0rem;
                   font-family: 'Arial Black', Arial, sans-serif;
                   color: ${bibColor}; /* Dynamic color for bib number */
                 }
@@ -159,6 +158,11 @@ function App() {
               value={bibNumber}
               onChange={(e) => setBibNumber(e.target.value)}
               className='p-4 w-[80%] border border-gray-300 rounded-lg mb-4 text-3xl font-bold text-center focus:outline-none focus:ring-2 focus:ring-blue-500'
+            
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch();
+                }}}
             />
           </div>
           <button
