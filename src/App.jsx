@@ -9,7 +9,7 @@ function App() {
   const [csvUploaded, setCsvUploaded] = useState(false);
 
   const getCertificateImage = (bib) => {
-    if (bib >= 10000 && bib <= 10999) {
+    if (bib >= 1 && bib <= 20000) {
       return {
         image: 'https://i.ibb.co/LXLZsP6g/10km-new.jpg',
         namePos: { x: '72%', y: '29%' },
