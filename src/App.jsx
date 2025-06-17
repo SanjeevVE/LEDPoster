@@ -1,52 +1,25 @@
-import React, { useState } from "react";
-import Papa from "papaparse";
-import "./App.css";
+import React, { useState } from 'react';
+import Papa from 'papaparse';
+import './App.css';
 
 function App() {
   const [data, setData] = useState([]);
-  const [bibNumber, setBibNumber] = useState("");
+  const [bibNumber, setBibNumber] = useState('');
   const [selectedEntry, setSelectedEntry] = useState(null);
   const [csvUploaded, setCsvUploaded] = useState(false);
 
   const getCertificateImage = (bib) => {
-    if (String(bib).startsWith("A")) {
-      return {
-        image: "https://i.ibb.co/CKR6tX1T/2km-new.jpg",
-        namePos: { x: "72%", y: "28%" },
-        bibPos: { x: "72%", y: "21%" },
-        nameColor: "white",
-        bibColor: "white",
-      };
-    }
     if (bib >= 10000 && bib <= 10999) {
       return {
-        image: "https://i.ibb.co/LXLZsP6g/10km-new.jpg",
-        namePos: { x: "72%", y: "29%" },
-        bibPos: { x: "72%", y: "22%" },
-        nameColor: "white",
-        bibColor: "white",
-      };
-    }
-    if (bib >= 21000 && bib <= 21999) {
-      return {
-        image: "https://i.ibb.co/qFPJVdJT/21KM-new.jpg",
-        namePos: { x: "79%", y: "26%" },
-        bibPos: { x: "79%", y: "19%" },
-        nameColor: "white",
-        bibColor: "white",
-      };
-    }
-    if (bib >= 50000) {
-      return {
-        image: "https://i.ibb.co/7Ntd3Bx2/5km-new.jpg",
-        namePos: { x: "79%", y: "26%" },
-        bibPos: { x: "79%", y: "19%" },
-        nameColor: "white",
-        bibColor: "white",
+        image: 'https://i.ibb.co/LXLZsP6g/10km-new.jpg',
+        namePos: { x: '72%', y: '29%' },
+        bibPos: { x: '72%', y: '22%' },
+        nameColor: 'white',
+        bibColor: 'white',
       };
     }
 
-    throw new Error("Error: Check your bib number");
+    throw new Error('Error: Check your bib number');
   };
 
   const handleFileUpload = (event) => {
@@ -55,20 +28,37 @@ function App() {
       header: true,
       skipEmptyLines: true,
       complete: (result) => {
-        setData(result.data);
+        console.log('CSV headers:', result.meta.fields);
+        console.log('First row sample:', result.data[0]);
+
+        const processedData = result.data.map((row) => {
+          const bibField =
+            row.bibNumber || row.BibNumber || row.bib || row.Bib || row.BIB;
+          return {
+            ...row,
+            bibNumber: bibField,
+          };
+        });
+
+        setData(processedData);
         setCsvUploaded(true);
       },
     });
   };
 
   const handleSearch = () => {
-    const entry = data.find((row) => row.bibNumber == bibNumber);
+    console.log('Searching for bib number:', bibNumber);
+    console.log('Available data:', data);
+
+    const entry = data.find(
+      (row) => String(row.bibNumber).trim() === String(bibNumber).trim()
+    );
     setSelectedEntry(entry || null);
     if (entry) {
       const { image, namePos, bibPos, nameColor, bibColor } =
         getCertificateImage(entry.bibNumber);
 
-      let certificateWindow = window.open("", "certificateWindow");
+      let certificateWindow = window.open('', 'certificateWindow');
 
       if (certificateWindow && !certificateWindow.closed) {
         certificateWindow.document.body.innerHTML = `
@@ -124,31 +114,32 @@ function App() {
         `;
         certificateWindow.document.close();
       } else {
-        alert("Unable to open or update the certificate window.");
+        alert('Unable to open or update the certificate window.');
       }
     } else {
-      alert("Bib number not available");
+      alert('Bib number not available');
     }
   };
 
   return (
     <div
-      className='App h-full w-full bg-cover bg-center bg-no-repeat flex justify-center items-center px-6 py-8 relative'
+      className='App h-full w-full flex justify-center items-center px-6 py-8 relative'
       style={{
-        backgroundImage: "url('https://i.ibb.co/9p0jf8s/background.jpg')",
-        backgroundSize: "cover", 
-        backgroundPosition: "center", 
-        width: "100vw", 
-        height: "100vh",
-        objectFit: "cover", 
+        background:
+          'linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7F7FD5 100%)',
+        width: '100vw',
+        height: '100vh',
       }}
     >
-      <div className='bg-black bg-opacity-80 p-8 rounded-lg shadow-lg w-[90%] max-w-xl h-[80vh] flex flex-col justify-center items-center text-center'>
-        <img
-          src='https://i.ibb.co/ZcpbbSj/nova-logo.png'
-          alt='Nova Logo'
-          className='w-96 h-auto mb-6 mx-auto'
-        />
+      <div className='bg-black bg-opacity-80 p-8 rounded-lg shadow-lg w-[90%] max-w-xl h-[90vh] flex flex-col justify-center items-center text-center'>
+        <div className='relative'>
+          <div className='absolute inset-0 rounded-[200px] bg-gradient-to-r from-white to-gray-200 blur-xl opacity-50'></div>
+          <img
+            src='https://i.ibb.co/ZcpbbSj/nova-logo.png'
+            alt='Nova Logo'
+            className='w-96 h-auto mb-6 mx-auto relative z-10'
+          />
+        </div>
         <div className='p-8 rounded-lg shadow-lg w-full max-w-md text-center'>
           <h1 className='text-white mb-6 text-3xl'>Enter Bib Number</h1>
           <div className='flex justify-center mb-6'>
@@ -158,11 +149,11 @@ function App() {
               value={bibNumber}
               onChange={(e) => setBibNumber(e.target.value)}
               className='p-4 w-[80%] border border-gray-300 rounded-lg mb-4 text-3xl font-bold text-center focus:outline-none focus:ring-2 focus:ring-blue-500'
-            
               onKeyDown={(e) => {
-                if (e.key === "Enter") {
+                if (e.key === 'Enter') {
                   handleSearch();
-                }}}
+                }
+              }}
             />
           </div>
           <button
@@ -183,11 +174,15 @@ function App() {
           id='fileUpload'
         />
         <label
-        htmlFor='fileUpload'
-        className={`px-6 py-3 rounded-md font-semibold shadow-md cursor-pointer transition-all duration-200 ${
-          csvUploaded ? "bg-[#C7CC00] hover:bg-[#AEB300]" : "bg-[#007BFF] hover:bg-blue-600 text-white"
-        }`}>
-        {csvUploaded ? "CSV Uploaded" : "Upload CSV"}</label>
+          htmlFor='fileUpload'
+          className={`px-6 py-3 rounded-md font-semibold shadow-md cursor-pointer transition-all duration-200 ${
+            csvUploaded
+              ? 'bg-[#C7CC00] hover:bg-[#AEB300]'
+              : 'bg-[#007BFF] hover:bg-blue-600 text-white'
+          }`}
+        >
+          {csvUploaded ? 'CSV Uploaded' : 'Upload CSV'}
+        </label>
       </div>
     </div>
   );
