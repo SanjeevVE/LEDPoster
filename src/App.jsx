@@ -9,7 +9,7 @@ function App() {
   const [csvUploaded, setCsvUploaded] = useState(false);
 
   const getCertificateImage = (bib) => {
-    if (bib >= 1 && bib <= 20000) {
+    if (bib >= 1 && bib <= 50000) {
       return {
         image: '/img/BIB-SivagiriMarathon-2025.jpg',
         namePos: { x: '50%', y: '80%' },
@@ -32,7 +32,7 @@ function App() {
       complete: (result) => {
         const processedData = result.data.map((row) => {
           const bibField =
-            row.bibNumber || row.BibNumber || row.bib || row.Bib || row.BIB;
+            row.BibNumber;
           return {
             ...row,
             bibNumber: bibField,
@@ -62,7 +62,7 @@ function App() {
         categoryColor,
       } = getCertificateImage(entry.bibNumber);
 
-      const rawName = (entry.firstName || '').trim();
+      const rawName = (entry.FullName || '').trim();
       const trimmedName =
         rawName.length > 20 ? rawName.substring(0, 20).trim() : rawName;
 
@@ -131,7 +131,7 @@ function App() {
                 <img src="${image}" alt="Certificate" style="width: 100%; height: 100%; object-fit: contain;" />
                 <div class="name">${trimmedName}</div>
                 <div class="bib">${entry.bibNumber}</div>
-                <div class="category">${entry.categoryName || ''}</div>
+                <div class="category">${entry.Category || ''}</div>
               </div>
             </body>
           </html>
