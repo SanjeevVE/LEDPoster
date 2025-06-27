@@ -11,11 +11,13 @@ function App() {
   const getCertificateImage = (bib) => {
     if (bib >= 1 && bib <= 20000) {
       return {
-        image: 'https://i.ibb.co/LXLZsP6g/10km-new.jpg',
-        namePos: { x: '72%', y: '29%' },
-        bibPos: { x: '72%', y: '22%' },
+        image: '/img/BIB-SivagiriMarathon-2025.jpg',
+        namePos: { x: '50%', y: '80%' },
+        bibPos: { x: '50%', y: '71%' },
+        categoryPos: { x: '38%', y: '62%' },
         nameColor: 'white',
         bibColor: 'white',
+        categoryColor: '#FFCC00',
       };
     }
 
@@ -28,9 +30,6 @@ function App() {
       header: true,
       skipEmptyLines: true,
       complete: (result) => {
-        console.log('CSV headers:', result.meta.fields);
-        console.log('First row sample:', result.data[0]);
-
         const processedData = result.data.map((row) => {
           const bibField =
             row.bibNumber || row.BibNumber || row.bib || row.Bib || row.BIB;
@@ -47,19 +46,36 @@ function App() {
   };
 
   const handleSearch = () => {
-    console.log('Searching for bib number:', bibNumber);
-    console.log('Available data:', data);
-
     const entry = data.find(
       (row) => String(row.bibNumber).trim() === String(bibNumber).trim()
     );
     setSelectedEntry(entry || null);
+
     if (entry) {
-      const { image, namePos, bibPos, nameColor, bibColor } =
-        getCertificateImage(entry.bibNumber);
+      const {
+        image,
+        namePos,
+        bibPos,
+        categoryPos,
+        nameColor,
+        bibColor,
+        categoryColor,
+      } = getCertificateImage(entry.bibNumber);
 
-      let certificateWindow = window.open('', 'certificateWindow');
+      const rawName = (entry.firstName || '').trim();
+      const trimmedName =
+        rawName.length > 20 ? rawName.substring(0, 20).trim() : rawName;
 
+      let nameFontSize = '2.5rem';
+      if (trimmedName.length <= 10) {
+        nameFontSize = '3.0rem';
+      } else if (trimmedName.length <= 15) {
+        nameFontSize = '2.8rem';
+      } else {
+        nameFontSize = '2.3rem';
+      }
+
+      const certificateWindow = window.open('', 'certificateWindow');
       if (certificateWindow && !certificateWindow.closed) {
         certificateWindow.document.body.innerHTML = `
           <html>
@@ -86,28 +102,36 @@ function App() {
                   top: ${namePos.y};
                   left: ${namePos.x};
                   transform: translate(-50%, -50%);
-                  font-size: 2.5rem;
+                  font-size: ${nameFontSize};
                   font-family: 'Arial Black', Arial, sans-serif;
-                  font-weight: normal;
-                  color: ${nameColor}; /* Dynamic color for name */
+                  color: ${nameColor};
                 }
                 .bib {
                   position: absolute;
-                    top: ${bibPos.y};
+                  top: ${bibPos.y};
                   left: ${bibPos.x};
                   transform: translate(-50%, -50%);
                   font-size: 7.0rem;
                   font-family: 'Arial Black', Arial, sans-serif;
-                  color: ${bibColor}; /* Dynamic color for bib number */
+                  color: ${bibColor};
                 }
-                  
+                .category {
+                  position: absolute;
+                  top: ${categoryPos.y};
+                  left: ${categoryPos.x};
+                  transform: translate(-50%, -50%);
+                  font-size: 2rem;
+                  font-family: 'Arial Black', Arial, sans-serif;
+                  color: ${categoryColor};
+                }
               </style>
             </head>
             <body>
               <div class="certificate">
                 <img src="${image}" alt="Certificate" style="width: 100%; height: 100%; object-fit: contain;" />
-                <div class="name">${entry.firstName}</div>
+                <div class="name">${trimmedName}</div>
                 <div class="bib">${entry.bibNumber}</div>
+                <div class="category">${entry.categoryName || ''}</div>
               </div>
             </body>
           </html>
@@ -125,15 +149,14 @@ function App() {
     <div
       className='App h-full w-full flex justify-center items-center px-6 py-8 relative'
       style={{
-        background:
-          'linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7F7FD5 100%)',
+        background: 'white',
         width: '100vw',
         height: '100vh',
       }}
     >
-      <div className='bg-black bg-opacity-80 p-8 rounded-lg shadow-lg w-[90%] max-w-xl h-[90vh] flex flex-col justify-center items-center text-center'>
+      <div className='bg-gradient-to-br from-[#1f2937] via-[#2d3748] to-[#4a5568] p-8 rounded-lg shadow-2xl w-[90%] max-w-xl h-[90vh] flex flex-col justify-center items-center text-center'>
         <div className='relative'>
-          <div className='absolute inset-0 rounded-[200px] bg-gradient-to-r from-white to-gray-200 blur-xl opacity-50'></div>
+          <div className='absolute inset-0 rounded-[200px] bg-gradient-to-r from-[#f9f5f0] to-[#d4af37] blur-3xl opacity-40'></div>
           <img
             src='https://i.ibb.co/ZcpbbSj/nova-logo.png'
             alt='Nova Logo'
@@ -145,7 +168,6 @@ function App() {
           <div className='flex justify-center mb-6'>
             <input
               type='text'
-              placeholder=''
               value={bibNumber}
               onChange={(e) => setBibNumber(e.target.value)}
               className='p-4 w-[80%] border border-gray-300 rounded-lg mb-4 text-3xl font-bold text-center focus:outline-none focus:ring-2 focus:ring-blue-500'
