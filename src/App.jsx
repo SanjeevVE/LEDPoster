@@ -14,7 +14,7 @@ function App() {
         image: '/img/BIB-SivagiriMarathon-2025.jpg',
         namePos: { x: '50%', y: '80%' },
         bibPos: { x: '50%', y: '71%' },
-        categoryPos: { x: '38%', y: '62%' },
+        categoryPos: { x: '35%', y: '72%' },
         nameColor: 'white',
         bibColor: 'white',
         categoryColor: '#FFCC00',
@@ -31,8 +31,7 @@ function App() {
       skipEmptyLines: true,
       complete: (result) => {
         const processedData = result.data.map((row) => {
-          const bibField =
-            row.BibNumber;
+          const bibField = row.BibNumber;
           return {
             ...row,
             bibNumber: bibField,
@@ -68,9 +67,9 @@ function App() {
 
       let nameFontSize = '2.5rem';
       if (trimmedName.length <= 10) {
-        nameFontSize = '3.0rem';
-      } else if (trimmedName.length <= 15) {
         nameFontSize = '2.8rem';
+      } else if (trimmedName.length <= 15) {
+        nameFontSize = '2.5rem';
       } else {
         nameFontSize = '2.3rem';
       }
@@ -78,63 +77,83 @@ function App() {
       const certificateWindow = window.open('', 'certificateWindow');
       if (certificateWindow && !certificateWindow.closed) {
         certificateWindow.document.body.innerHTML = `
-          <html>
-            <head>
-              <title>Certificate</title>
-              <style>
-                body {
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  height: 100vh;
-                  margin: 0;
-                  background-color: #f5f5f5;
-                }
-                .certificate {
-                  position: relative;
-                  width: 100vw;                 
-                  overflow: hidden;
-                  background-color: white;
-                  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-                }
-                .name {
-                  position: absolute;
-                  top: ${namePos.y};
-                  left: ${namePos.x};
-                  transform: translate(-50%, -50%);
-                  font-size: ${nameFontSize};
-                  font-family: 'Arial Black', Arial, sans-serif;
-                  color: ${nameColor};
-                }
-                .bib {
-                  position: absolute;
-                  top: ${bibPos.y};
-                  left: ${bibPos.x};
-                  transform: translate(-50%, -50%);
-                  font-size: 7.0rem;
-                  font-family: 'Arial Black', Arial, sans-serif;
-                  color: ${bibColor};
-                }
-                .category {
-                  position: absolute;
-                  top: ${categoryPos.y};
-                  left: ${categoryPos.x};
-                  transform: translate(-50%, -50%);
-                  font-size: 2rem;
-                  font-family: 'Arial Black', Arial, sans-serif;
-                  color: ${categoryColor};
-                }
-              </style>
-            </head>
-            <body>
-              <div class="certificate">
-                <img src="${image}" alt="Certificate" style="width: 100%; height: 100%; object-fit: contain;" />
-                <div class="name">${trimmedName}</div>
-                <div class="bib">${entry.bibNumber}</div>
-                <div class="category">${entry.Category || ''}</div>
-              </div>
-            </body>
-          </html>
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@700;900&family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+
+        <title>Certificate</title>
+        <style>
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0;
+                background-color: #f5f5f5;
+                overflow: hidden;
+            }
+            .certificate {
+                position: relative;
+                width: 100vw;                 
+                height: 100vh;
+                max-width: none;
+                overflow: hidden;
+                background-color: white;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            }
+            .certificate img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                display: block;
+            }
+
+            .name {
+                position: absolute;
+                top: ${namePos.y};
+                left: ${namePos.x};
+                transform: translate(-50%, -50%);
+                font-size: ${nameFontSize};
+                font-family: 'Roboto', sans-serif;
+                font-weight: 400; /* This CSS is correct if the 100 weight is loaded */
+                color: ${nameColor};
+                white-space: nowrap;
+            }
+            .bib {
+                position: absolute;
+                top: ${bibPos.y};
+                left: ${bibPos.x};
+                transform: translate(-50%, -50%);
+                font-size: 7.0rem;
+                font-family: 'Impact', 'Bebas Neue', sans-serif; 
+                font-weight: normal;
+                color: ${bibColor};
+            }
+            .category {
+                position: absolute;
+                top: ${categoryPos.y};
+                left: ${categoryPos.x};
+                transform: translate(-50%, -50%) rotate(180deg);
+                writing-mode: vertical-rl;
+                text-orientation: mixed;
+                font-size: 3.0rem;
+                font-family: 'Oswald', 'Impact', sans-serif;
+                font-weight: 900;
+                color: ${categoryColor};
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="certificate">
+            <img src="${image}" alt="Certificate" />
+            <div class="name">${trimmedName}</div>
+            <div class="bib">${entry.bibNumber}</div>
+            <div class="category">${entry.Category || ''}</div>
+        </div>
+    </body>
+</html>
         `;
         certificateWindow.document.close();
       } else {
